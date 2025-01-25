@@ -14,9 +14,14 @@
             <img src="{{ url_for('original_file', filename=original_filename) }}" alt="Original Image">
         </div>
         <div class="image-container">
+            <h2>Greyscale Image</h2>
+            <img src="{{ url_for('processed_file', filename=greyscale_filename) }}" alt="Greyscaled Image">
+        </div>
+        <div class="image-container">
             <h2>Processed Image</h2>
             <img src="{{ url_for('processed_file', filename=processed_filename) }}" alt="Processed Image">
         </div>
+        
     </div>
     <a href="{{ url_for('home') }}">Back to Upload</a>
 </body>

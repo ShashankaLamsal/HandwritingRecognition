@@ -4,7 +4,11 @@ import numpy as np
 import cv2
 from io import BytesIO
 from PIL import Image
+
+#local imports
 from laplacian_edge_detector import conv2d  # Import the conv2d function
+from greyscale import apply_greyscale
+
 
 app = Flask(__name__)
 
@@ -68,10 +72,15 @@ def upload_file():
         processed_path = os.path.join(app.config['PROCESSED_FOLDER'], processed_filename)
         processed_pil.save(processed_path)
 
+        greyscale_filename = f"greyscale_{filename}"
+        greyscale_path = os.path.join(app.config['PROCESSED_FOLDER'], greyscale_filename)
+        greyscale_pil = Image.fromarray(image)
+        greyscale_pil.save(greyscale_path)
+
         # Display success message and provide download link
         #flash('File successfully uploaded and processed!')
 
-        #return redirect(url_for('processed_file', filename=processed_filename))
+        
         return redirect(url_for('compare_images', filename=filename))
     
     flash('Allowed file types are: png, jpg, jpeg')
@@ -92,6 +101,8 @@ def compare_images(filename):
     original_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
     processed_filename = f"processed_{filename}"
     processed_path = os.path.join(app.config['PROCESSED_FOLDER'], processed_filename)
+    greyscale_filename=f"greyscale_{filename}"
+    greyscale_path = os.path.join(app.config['PROCESSED_FOLDER'], greyscale_filename)
     
     # Verify files exist before rendering
     if not os.path.exists(original_path):
@@ -106,7 +117,8 @@ def compare_images(filename):
     
     return render_template('comparison.html', 
                            original_filename=filename, 
-                           processed_filename=processed_filename)
+                           processed_filename=processed_filename,
+                           greyscale_filename=greyscale_filename)
 
 if __name__ == '__main__':
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
