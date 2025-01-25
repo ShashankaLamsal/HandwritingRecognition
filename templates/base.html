@@ -18,13 +18,33 @@
             {% endif %}
         {% endwith %}   
         
-        <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data" >
             <div class="upload-container">
-                <input type="file" name="file" id="file" class="file-input">
-                <label for="file" class="file-label">Choose a file</label>
+                
+
+                <input type="file" name="file" id="file" class="file-input" onchange="updateFileName(this)">
+                <div class="file-display">
+                    <label for="file" class="file-label">Choose a file</label>
+                    <span id="file-name-display"></span>
+                </div>
                 <button type="submit" class="upload-button">Upload</button>
             </div>
         </form>
     </div>
+    <script>
+        function updateFileName(input) {
+        const fileNameDisplay = document.getElementById('file-name-display');
+        const fileLabel = document.querySelector('.file-label');
+        
+        if (input.files && input.files.length > 0) {
+            fileNameDisplay.textContent = input.files[0].name;
+            fileLabel.style.display = 'none';
+        } else {
+            fileNameDisplay.textContent = '';
+            fileLabel.style.display = 'inline-block';
+        }
+    }
+
+    </script>
 </body>
 </html>

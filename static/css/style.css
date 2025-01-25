@@ -67,3 +67,16 @@ h1 {
     border: 1px solid #f5c6cb;
     text-align: center;
 }
+.file-display {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#file-name-display {
+    color: #333;
+    max-width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

@@ -69,16 +69,44 @@ def upload_file():
         processed_pil.save(processed_path)
 
         # Display success message and provide download link
-        flash('File successfully uploaded and processed!')
-        return redirect(url_for('processed_file', filename=processed_filename))
+        #flash('File successfully uploaded and processed!')
+
+        #return redirect(url_for('processed_file', filename=processed_filename))
+        return redirect(url_for('compare_images', filename=filename))
     
     flash('Allowed file types are: png, jpg, jpeg')
     return redirect(url_for('home'))
+
+@app.route('/original/<filename>')
+def original_file(filename):
+    upload_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    return send_file(upload_path, mimetype='image/jpeg', as_attachment=False)
 
 @app.route('/processed/<filename>')
 def processed_file(filename):
     processed_path = os.path.join(app.config['PROCESSED_FOLDER'], filename)
     return send_file(processed_path, mimetype='image/jpeg', as_attachment=False)
+
+@app.route('/compare/<filename>')
+def compare_images(filename):
+    original_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
+    processed_filename = f"processed_{filename}"
+    processed_path = os.path.join(app.config['PROCESSED_FOLDER'], processed_filename)
+    
+    # Verify files exist before rendering
+    if not os.path.exists(original_path):
+        print(f"Original file not found: {original_path}")
+        flash('Original image not found')
+        return redirect(url_for('home'))
+    
+    if not os.path.exists(processed_path):
+        print(f"Processed file not found: {processed_path}")
+        flash('Processed image not found')
+        return redirect(url_for('home'))
+    
+    return render_template('comparison.html', 
+                           original_filename=filename, 
+                           processed_filename=processed_filename)
 
 if __name__ == '__main__':
     os.makedirs(UPLOAD_FOLDER, exist_ok=True)
