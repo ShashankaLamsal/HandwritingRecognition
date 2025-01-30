@@ -1,0 +1,7 @@
+batch_size: 32
+height: 64
+learning_rate: 0.001
+max_text_length: 16
+model_path: Models/handwriting_recognition
+vocab: '!"#&''(),-.0123456789:;?ABCDEFGHIJKLMNOPQRSTUVWYZabcdefghijklmnopqrstuvwxyz'
+width: 256
