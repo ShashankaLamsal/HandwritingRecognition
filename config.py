@@ -22,3 +22,4 @@ configs.model_path = "Models/handwriting_recognition"
 # Save configurations
 configs.save()
 print("Model configuration saved successfully!")
+
