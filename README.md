@@ -30,11 +30,12 @@ For Handwritten Word Recognition project using Python with Flask.
 
 ## Workflow
 
-1. **Commit to `dev`:**
+1. **Commit to `dev`: [DEFAULT]**
    ```bash
    git checkout dev
    git add .
    git commit -m "Your message"
+   git push -u origin dev
    ```
 
 2. **Merge to `staging`:**
