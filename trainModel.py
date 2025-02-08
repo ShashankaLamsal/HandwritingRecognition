@@ -7,6 +7,9 @@ from mltu.metrics import CWERMetric
 from mltu.configs import BaseModelConfigs
 import pickle
 
+
+
+# THIS ISNT THE MAIN TRAINING SCRIPT, THIS IS TO PREPARE TRAINING THE INTIAL MODEL 
 # Load model configurations
 configs = BaseModelConfigs.load("Models/handwriting_recognition/configs.yaml")
 

@@ -15,9 +15,11 @@ configs.max_text_length = max_len  # Set max length from preprocessing
 # Other configurations 
 configs.height = 64  # Image height
 configs.width = 256  # Image width
-configs.batch_size = 32
+configs.batch_size = 8 #use 32 for CAN
 configs.learning_rate = 0.001
 configs.model_path = "Models/handwriting_recognition"
+configs.train_epochs = 50  # Set the number of training epochs
+configs.train_workers = 4
 
 # Save configurations
 configs.save()
