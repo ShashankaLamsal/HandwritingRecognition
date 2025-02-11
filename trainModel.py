@@ -6,6 +6,8 @@ from mltu.losses import CTCloss
 from mltu.metrics import CWERMetric
 from mltu.configs import BaseModelConfigs
 import pickle
+from keras.utils import plot_model
+
 
 
 

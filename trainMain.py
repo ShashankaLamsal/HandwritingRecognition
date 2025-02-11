@@ -4,7 +4,7 @@ from mltu.dataProvider import DataProvider
 #from mltu.callbacks import EarlyStopping,ModelCheckpoint, ReduceLROnPlateau, TensorBoard, TrainLogger, Model2onnx
 from mltu.callbacks import TrainLogger, Model2onnx 
 from mltu.preprocessors import ImageReader
-from mltu.transformers import LabelIndexer
+from mltu.transformers import LabelIndexer, ImageResizer, LabelPadding
 from mltu.losses import CTCloss
 
 from keras.callbacks import EarlyStopping, ModelCheckpoint, ReduceLROnPlateau, TensorBoard
@@ -15,34 +15,53 @@ import pickle
 import numpy as np
 
 
-
+from itertools import islice
 
 # Load model configurations
 configs = BaseModelConfigs.load("Models/handwriting_recognition/configs.yaml")
 
-print("Checking FRIST LINE.---------------------------------------------------------")
+
 
 
 # Load CSV manually
 train_data = pd.read_csv("train_data.csv").values.tolist()
 val_data = pd.read_csv("val_data.csv").values.tolist()
 
+#train_data = pd.read_csv("train_data.csv", header=None, names=["image_path", "text_label"]).values.tolist()
+#val_data = pd.read_csv("val_data.csv", header=None, names=["image_path", "text_label"]).values.tolist()
+
+
+
+
+
+
 # Initialize DataProvider manually and load dataset
 train_data_provider = DataProvider(
     dataset=train_data,
     skip_validation=True,
     batch_size=configs.batch_size,
-    data_preprocessors=[ImageReader()]  # Required argument in MLtu 0.1.5
+    data_preprocessors=[ImageReader()],  # Required argument in MLtu 0.1.5
+    transformers=[
+        ImageResizer(configs.width, configs.height, keep_aspect_ratio=True),
+        LabelIndexer(configs.vocab),
+        LabelPadding(max_word_length=configs.max_text_length, padding_value=len(configs.vocab))
+        ]
 )
 
 val_data_provider = DataProvider(
     dataset=val_data,
     skip_validation=True,
     batch_size=configs.batch_size,
-    data_preprocessors=[ImageReader()]  # Required argument in MLtu 0.1.5
+    data_preprocessors=[ImageReader()],  # Required argument in MLtu 0.1.5
+    transformers=[
+        ImageResizer(configs.width, configs.height, keep_aspect_ratio=True),
+        LabelIndexer(configs.vocab),
+        LabelPadding(max_word_length=configs.max_text_length, padding_value=len(configs.vocab))
+        ]
+        
 )
 
-print("Checking 2nd LINE.................................................................")
+
 # Load compiled model
 from trainModel import build_model
 model = build_model(
@@ -66,7 +85,6 @@ model2onnx = Model2onnx(f"{configs.model_path}/model.h5")
 
 #Debigging / batch checking and resizing
 
-print("Checking 3rd LINE.---------------------------------------------------------")
 
 
 
@@ -76,27 +94,6 @@ label_indexer = LabelIndexer(configs.vocab)  # Converts text labels into numeric
 
 print(f"Total batches: {len(train_data_provider)}--------------------------------------------------------------")
 
-
-for images, labels in train_data_provider:
-    print("Checking 4th LINE.----------------------------------------------------------------------")
-    
-
-    # Convert text labels to numeric sequences
-    #labels = [label_indexer(label) for label in labels]
-
-    images = np.array([np.array(img) for img in images], dtype=np.float32)  # Convert to uniform NumPy array
-    labels = np.array(labels)
-    
-
-    # Ensure all labels have the same length
-    labels = [
-        np.pad(label, (0, max_len - len(label)), mode='constant') if len(label) < max_len else label[:max_len]
-        for label in labels
-    ]
-
-    print(f"Batch Image Shape: {np.array(images).shape}")
-    print(f"Batch Label Shape: {np.array(labels).shape}")
-    break  # Only check the first batch
 
 
 

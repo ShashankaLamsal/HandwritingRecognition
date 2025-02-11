@@ -2,8 +2,9 @@ from mltu.dataProvider import DataProvider
 from mltu.preprocessors import ImageReader
 from mltu.transformers import ImageResizer, LabelIndexer, LabelPadding
 from mltu.augmentors import RandomBrightness, RandomRotate, RandomErodeDilate
-import pickle
 
+import pickle
+import pandas as pd
 # Load dataset, vocab, and max_len
 with open("preprocessed_data.pkl", "rb") as f:
     dataset, vocab, max_len = pickle.load(f)
@@ -36,7 +37,14 @@ train_data_provider.augmentors = [
 ]
 
 # Save training and validation datasets for reproducibility
-train_data_provider.to_csv("train_data.csv")
-val_data_provider.to_csv("val_data.csv")
+#train_data_provider.to_csv("train_data.csv")
+#val_data_provider.to_csv("val_data.csv")
+
+
+
+# Save datasets with correct column names
+pd.DataFrame(train_data_provider._dataset, columns=["image_path", "text_label"]).to_csv("train_data.csv", index=False)
+pd.DataFrame(val_data_provider._dataset, columns=["image_path", "text_label"]).to_csv("val_data.csv", index=False)
+
 
 print("DataProvider setup completed! Training and validation datasets are ready.")
