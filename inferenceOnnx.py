@@ -56,7 +56,7 @@ def predict_text1(image_path):
 
 # Test the ONNX model
 if __name__ == "__main__":
-    test_image = "uploads/nerd.png"  #  test image path inside uploads
+    test_image = "uploads/test.png"  #  test image path inside uploads
     result, confidence = predict_text1(test_image)
     print(f"Predicted Text: {result}")
     print(f"Confidence Score: {confidence:.2f}%")

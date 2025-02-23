@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONNX Prediction Result</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f4;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            max-width: 300px;
+            height: auto;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        h2 {
+            margin: 10px 0;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{{ url_for('uploaded_file', filename=image_filename) }}" alt="Uploaded Image">
+        <h2>Predicted Text: {{ predicted_text }}</h2>
+        <h3>Confidence: {{ confidence_score }}%</h3>
+        <a href="{{ url_for('home') }}">
+            <button>Try Another Image</button>
+        </a>
+        
+    </div>
+</body>
+</html>
