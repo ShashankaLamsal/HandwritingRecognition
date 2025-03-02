@@ -15,6 +15,10 @@ session = ort.InferenceSession(onnx_model_path, providers=["CPUExecutionProvider
 def preprocess_image(image_path):
     image = cv2.imread(image_path)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+    # Apply median filter to remove noise
+    image = cv2.medianBlur(image, 11)  # 11x11 kernel size (adjust as needed)
+    
     image = cv2.resize(image, (configs.width, configs.height))  # Resize to match model input
     image = np.expand_dims(image, axis=0).astype(np.float32)  # Add batch dimension
     return image
@@ -56,7 +60,8 @@ def predict_text1(image_path):
 
 # Test the ONNX model
 if __name__ == "__main__":
-    test_image = "uploads/test.png"  #  test image path inside uploads
+    #test_image = "uploads/test.png"  #  test image path inside uploads
+    test_image= "processed.png"
     result, confidence = predict_text1(test_image)
     print(f"Predicted Text: {result}")
     print(f"Confidence Score: {confidence:.2f}%")

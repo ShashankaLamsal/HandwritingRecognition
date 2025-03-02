@@ -11,8 +11,8 @@ configs = BaseModelConfigs.load("Models/smallModel/configs.yaml")
 
 # Load the trained model
 
+#model = tf.keras.models.load_model("Models/multiModel.h5", compile=False)
 model = tf.keras.models.load_model("Models/smallModel/model.h5", compile=False)
-
 
 
 def predict_text(image_path):
@@ -39,8 +39,8 @@ def predict_text(image_path):
 
 
 if __name__ == "__main__":
-    #test_image = "uploads/h.png"  # Replace with your test image
-    test_image = "Datasets/IAM_Words/words/a01/a01-000u/a01-000u-00-01.png" #word is move
+    test_image = "uploads/kaleNoLine.png"  # Replace with your test image
+    #test_image = "Datasets/IAM_Words/words/a01/a01-000u/a01-000u-00-01.png" #word is move
     result, confidence = predict_text(test_image)
     print(f"Predicted Text: {result}")
     print(f"Confidence Score: {confidence:.2f}%")
