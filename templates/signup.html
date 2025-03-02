@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Sign Up</title>
+        <link rel="stylesheet"
+            href="{{ url_for('static', filename='css/loginUI.css') }}">
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+            integrity="sha384-EVSTQN3/..."
+            crossorigin="anonymous" />
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="container main">
+                <div class="row">
+                    <!-- Left image portion -->
+                    <div class="col-md-6 side-image">
+                        <img
+                            src="{{ url_for('static', filename='images/Main_Banner.png') }}">
+                    </div>
+                    <!-- Right form portion -->
+                    <div class="col-md-6 right">
+                        <div class="input-box">
+                            <header>Sign Up</header>
+
+                            <!-- Flash messages for sign-up errors/success -->
+                            {% with messages =
+                            get_flashed_messages(with_categories=true) %}
+                            {% if messages %}
+                            {% for category, message in messages %}
+                            <div
+                                class="alert alert-{{ category }} {% if category == 'error' %}alert-danger{% endif %}">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                            {% endif %}
+                            {% endwith %}
+
+                            <!-- Sign Up Form -->
+                            <form action="{{ url_for('auth.signup') }}"
+                                method="POST">
+                                <div class="input-field">
+                                    <input type="text" class="input"
+                                        id="username" name="username" required
+                                        autocomplete="off">
+                                    <label for="username">Username</label>
+                                </div>
+                                <div class="input-field">
+                                    <input type="email" class="input" id="email"
+                                        name="email" required
+                                        autocomplete="off">
+                                    <label for="email">Email</label>
+                                </div>
+                                <div class="input-field">
+                                    <input type="password" class="input"
+                                        id="password" name="password" required>
+                                    <label for="password">Password</label>
+                                    <span class="toggle-password"
+                                        onclick="togglePassword()">
+                                        <i id="eyeIcon"
+                                            class="fa fa-eye-slash"></i>
+                                    </span>
+                                </div>
+
+                                <div class="input-field">
+                                    <input type="submit" class="submit"
+                                        value="Sign Up">
+                                </div>
+                            </form>
+
+                            <!-- Link back to login page -->
+                            <div class="signin">
+                                <span>Already have an account?
+                                    <a href="{{ url_for('home') }}">Log In
+                                        here</a>
+                                </span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js">
+  </script>
+        <script>
+            function togglePassword() {
+                const passwordField = document.getElementById("password"); // Fix the ID here
+                const eyeIcon = document.getElementById("eyeIcon");
+            
+                if (passwordField.type === "password") {
+                    passwordField.type = "text";
+                    eyeIcon.classList.remove("fa-eye-slash");
+                    eyeIcon.classList.add("fa-eye");
+                } else {
+                    passwordField.type = "password";
+                    eyeIcon.classList.remove("fa-eye");
+                    eyeIcon.classList.add("fa-eye-slash");
+                }
+            }
+    </script>
+    </body>
+</html>

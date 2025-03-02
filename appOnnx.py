@@ -24,8 +24,17 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-@app.route('/')
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        # You can add any logic here, but for now, we simply redirect
+        return redirect(url_for('home'))
+    return render_template('login.html')
+
+@app.route('/home')
 def home():
+    # Render the base.html page
     return render_template('base.html')
 
 @app.route('/upload', methods=['POST'])
