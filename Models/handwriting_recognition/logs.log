@@ -1,0 +1,13 @@
+2025-02-13 10:18:12,049 - root - INFO - Epoch 0; loss: 14.191697120666504; accuracy: 0.9837183356285095; val_loss: 16.479644775390625; val_accuracy: 0.984079897403717
+2025-02-13 10:43:29,722 - root - INFO - Epoch 1; loss: 10.920221328735352; accuracy: 0.9844597578048706; val_loss: 10.268376350402832; val_accuracy: 0.9838207960128784
+2025-02-13 10:43:31,914 - tf2onnx.tfonnx - INFO - Using tensorflow=2.9.1, onnx=1.12.0, tf2onnx=1.14.0/8f8d49
+2025-02-13 10:43:31,914 - tf2onnx.tfonnx - INFO - Using opset <onnx, 15>
+2025-02-13 10:43:32,037 - tf2onnx.tf_utils - INFO - Computed 0 values for constant folding
+2025-02-13 10:43:32,044 - tf2onnx.tf_utils - INFO - Computed 0 values for constant folding
+2025-02-13 10:43:32,048 - tf2onnx.tf_utils - INFO - Computed 0 values for constant folding
+2025-02-13 10:43:32,057 - tf2onnx.tf_utils - INFO - Computed 0 values for constant folding
+2025-02-13 10:43:32,179 - tf2onnx.tf_utils - INFO - Computed 2 values for constant folding
+2025-02-13 10:43:32,265 - tf2onnx.tfonnx - INFO - folding node using tf type=StridedSlice, name=model_1/bidirectional_1/forward_lstm_1/PartitionedCall/strided_slice
+2025-02-13 10:43:32,267 - tf2onnx.tfonnx - INFO - folding node using tf type=StridedSlice, name=model_1/bidirectional_1/backward_lstm_1/PartitionedCall/strided_slice
+2025-02-13 10:43:32,411 - tf2onnx.optimizer - INFO - Optimizing ONNX model
+2025-02-13 10:43:32,729 - tf2onnx.optimizer - INFO - After optimization: BatchNormalization -8 (8->0), Cast -4 (11->7), Concat -4 (10->6), Const -88 (130->42), Expand -3 (4->1), Gather +2 (2->4), Identity -2 (2->0), Shape -1 (4->3), Slice -1 (5->4), Squeeze -3 (5->2), Transpose -39 (43->4), Unsqueeze -14 (17->3)

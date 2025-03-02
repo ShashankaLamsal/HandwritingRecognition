@@ -24,14 +24,21 @@ configs = BaseModelConfigs.load("Models/handwriting_recognition/configs.yaml")
 
 
 # Load CSV manually
-train_data = pd.read_csv("train_data.csv").values.tolist()
-val_data = pd.read_csv("val_data.csv").values.tolist()
+#train_data = pd.read_csv("train_data.csv").values.tolist()
+#val_data = pd.read_csv("val_data.csv").values.tolist()
 
-#train_data = pd.read_csv("train_data.csv", header=None, names=["image_path", "text_label"]).values.tolist()
-#val_data = pd.read_csv("val_data.csv", header=None, names=["image_path", "text_label"]).values.tolist()
+# Load dataset
+train_data = pd.read_csv("train_data.csv", dtype={"text_label": str}).values.tolist()
 
+val_data = pd.read_csv("val_data.csv", dtype={"text_label": str}).values.tolist()
 
+# Convert all labels explicitly to strings
+for i in range(len(train_data)):
+    train_data[i][1] = str(train_data[i][1])  # Ensure labels are always strings
 
+    # Convert all labels explicitly to strings
+for i in range(len(val_data)):
+    val_data[i][1] = str(val_data[i][1])  # Ensure labels are always strings
 
 
 
@@ -42,7 +49,7 @@ train_data_provider = DataProvider(
     batch_size=configs.batch_size,
     data_preprocessors=[ImageReader()],  # Required argument in MLtu 0.1.5
     transformers=[
-        ImageResizer(configs.width, configs.height, keep_aspect_ratio=True),
+        ImageResizer(configs.width, configs.height, keep_aspect_ratio=False),
         LabelIndexer(configs.vocab),
         LabelPadding(max_word_length=configs.max_text_length, padding_value=len(configs.vocab))
         ]
@@ -54,7 +61,7 @@ val_data_provider = DataProvider(
     batch_size=configs.batch_size,
     data_preprocessors=[ImageReader()],  # Required argument in MLtu 0.1.5
     transformers=[
-        ImageResizer(configs.width, configs.height, keep_aspect_ratio=True),
+        ImageResizer(configs.width, configs.height, keep_aspect_ratio=False),
         LabelIndexer(configs.vocab),
         LabelPadding(max_word_length=configs.max_text_length, padding_value=len(configs.vocab))
         ]
@@ -109,7 +116,7 @@ model.fit(
 )
 
 # Save the training and validation datasets
-train_data_provider.to_csv(f"{configs.model_path}/train.csv")
-val_data_provider.to_csv(f"{configs.model_path}/val.csv")
+train_data_provider.to_csv(f"{configs.model_path}/trained.csv")
+val_data_provider.to_csv(f"{configs.model_path}/validated.csv")
 
 print("Training complete. Model saved successfully!")
