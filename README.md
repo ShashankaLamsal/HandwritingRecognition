@@ -40,6 +40,8 @@ For Handwritten Word Recognition project using Python with Flask.
 
    to pull do
    git pull --rebase
+   if merge conflict
+   git rebase --abort
    ```
 
 2. **Merge to `staging`:**
