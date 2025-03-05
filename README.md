@@ -36,6 +36,10 @@ For Handwritten Word Recognition project using Python with Flask.
    git add .
    git commit -m "Your message"
    git push -u origin dev
+
+
+   to pull do
+   git pull --rebase
    ```
 
 2. **Merge to `staging`:**
