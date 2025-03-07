@@ -10,7 +10,8 @@
 <body>
     <div class="container">
         <img src="{{ url_for('uploaded_file', filename=image_filename) }}" alt="Uploaded Image">
-        <h2>Predicted Text: {{ predicted_text }}</h2>
+        <h2>Predicted Text:</h2>
+        <h2> {{ predicted_text }}</h2>
         <h3>Confidence: {{ confidence_score }}%</h3>
 
 

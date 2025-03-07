@@ -7,8 +7,8 @@ from io import BytesIO
 from PIL import Image
 
 # Import ONNX inference function
-from inferenceOnnx import predict_text
-
+#from inferenceOnnx import predict_text
+from inferenceTrOCR import predict_text
 app = Flask(__name__)
 
 # Secret key for flash messages
