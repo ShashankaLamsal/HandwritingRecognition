@@ -97,3 +97,7 @@ input {
 .try-again-button:hover {
     background-color: #0056b3;
 }
+.confidence {
+    color: green;
+    font-weight: bold;
+}

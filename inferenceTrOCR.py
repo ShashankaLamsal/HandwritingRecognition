@@ -9,8 +9,12 @@ model = VisionEncoderDecoderModel.from_pretrained("microsoft/trocr-base-handwrit
 
 def predict_text(image_path):
     
-    image = Image.open(image_path).convert("RGB")
-
+    if isinstance(image_path, str):  # If it's a file path, open image
+        image = Image.open(image_path).convert("RGB")
+    elif isinstance(image_path, Image.Image):  # If it's a PIL Image, use it directly
+        image = image_path
+    else:
+        raise ValueError("Invalid input: Must be a file path or PIL Image.")
     # preprocess
     pixel_values = processor(images=image, return_tensors="pt").pixel_values
 
